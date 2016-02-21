@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Carson App</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="assets/app.css"/>
+    <link rel="icon" 
+      type="image/png" 
+      href="./assets/png/icons-butler.png" />
+  </head>
+
+  <body ng-app="starterApp" layout="row" ng-controller="MenuController as ul">
+
+  <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2"
+                md-component-id="left">
+
+    <md-toolbar class="md-whiteframe-z1">
+      <h1>Menu</h1>
+      </md-button>
+    </md-toolbar>
+
+    <md-list>
+      <md-list-item ng-repeat="it in ul.menus">
+          <md-button ng-click="ul.selectMenu(it)" ng-class="{'selected' : it === ul.selected }">
+            <md-icon md-svg-icon="{{it.avatar}}"class="avatar md-accent md-hue-2"></md-icon>
+            {{it.name}}
+          </md-button>
+      </md-list-item>
+    </md-list>
+
+  </md-sidenav>
+
+
+  <div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
+
+    <md-toolbar layout="row" class="md-whiteframe-z1">
+      <md-button class="menu"  ng-click="ul.toggleList()" aria-label="Show Menu List">
+        <md-icon md-svg-icon="menu"></md-icon>
+      </md-button>
+      <h1>{{ul.selected.name}}</h1>
+            <span flex=""></span>
+    </md-toolbar>
+
+    <md-content flex id="content">
+    
+       <div layout="row" layout-sm="column"  class="mainbox" >
+           <div layout="column" flex="33" flex-sm="100" layout-sm="column" ng-controller="ActivatorController as act">
+            <md-whiteframe class="md-whiteframe-z4" layout="column" >
+             <h2>Actionneurs</h2>
+              <md-list>
+                <md-list-item ng-repeat="it in act.activators" >
+                    <div class="md-list-item-text">
+                      <md-icon md-svg-icon="icon_{{it.type}}"  ng-class="{'md-accent md-hue-2': it.active}"></md-icon> 
+                      {{it.name}}
+                    </div>
+                  <md-switch class="md-secondary" ng-change="act.selectActivator(it)" ng-class="{'selected' : it === act.selected }" ng-model="it.active" aria-label="it.active"></md-switch>
+                </md-list-item>
+              </md-list>
+           </md-whiteframe>
+    
+          </div>
+          <div layout="column" flex="33" flex-sm="100" layout-sm="column" ng-controller="ScenarioController as scene">
+            <md-whiteframe class="md-whiteframe-z4" layout="column" >
+             <h2>Scenarios</h2>
+              <md-list>
+                <md-list-item ng-repeat="it in scene.scenarios" >
+                    <md-icon md-svg-icon="icon_scenario" ></md-icon> 
+                    <md-button ng-click="scene.selectScenario(it)">{{it.name}}</md-button>
+                </md-list-item>
+              </md-list>
+           </md-whiteframe>
+          </div>
+
+         <div layout="column" flex="33" flex-sm="100" layout-sm="column">
+              <md-whiteframe class="md-whiteframe-z4" layout="column" >              
+              <h2>Thermostat</h2>
+              <md-list class="listdemoListControls">
+                <md-list-item ng-click="navigateTo(setting.extraScreen, $event)">
+                  <md-icon md-svg-icon="icon_sun" class="md-accent md-hue-2"></md-icon>
+                  <p> Temperature Jour </p>
+                     <div layout="">
+                        <md-slider flex="" min="0" max="25" ng-model="color.red" aria-label="red" id="red-slider">
+                        </md-slider>
+                         <div flex="10" layout="" layout-align="center center">
+                        </div>
+                        <div flex="20" layout="" layout-align="center center">
+                          <input flex="" type="number" ng-model="color.red" aria-label="red" aria-controls="red-slider">
+                        </div>
+                      </div>
+                  </md-list-item>              
+                <md-list-item ng-click="navigateTo(setting.extraScreen, $event)">
+                  <md-icon md-svg-icon="icon_night"></md-icon>
+                  <p> Temperature Nuit </p>
+                     <div layout="">
+                        <md-slider flex="" min="0" max="25" ng-model="color.red" aria-label="red" id="red-slider">
+                        </md-slider>
+                         <div flex="10" layout="" layout-align="center center">
+                        </div>
+                        <div flex="20" layout="" layout-align="center center">
+                          <input flex="" type="number" ng-model="color.red" aria-label="red" aria-controls="red-slider">
+                        </div>
+                      </div>
+                  </md-list-item>  
+              </md-list>              
+              </md-whiteframe>
+              <md-whiteframe class="md-whiteframe-z4" layout="column" >                 
+              <h2>Cuisine</h2>
+              <md-list class="listdemoListControls">
+                <md-list-item ng-click="navigateTo(setting.extraScreen, $event)">
+                  <md-icon md-svg-icon="icon_cloud" class="md-accent md-hue-2"></md-icon>
+                  <p> Test </p>
+                  <md-switch class="md-secondary" ng-model="setting.enabled"></md-switch>
+                </md-list-item>              
+              </md-list>  
+              </md-whiteframe>              
+          </div>
+        </div>
+        
+ </md-content>
+      
+  </div>
+
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-animate/angular-animate.js"></script>
+    <script src="./bower_components/angular-aria/angular-aria.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
+    <script src="./src/menus/Menus.js"></script>
+    <script src="./src/menus/MenuController.js"></script>
+    <script src="./src/menus/MenuService.js"></script>
+    <script src="./src/activators/Activator.js"></script>
+    <script src="./src/activators/ActivatorController.js"></script>
+    <script src="./src/activators/ActivatorService.js"></script>    
+    <script src="./src/scenarios/Scenario.js"></script>
+    <script src="./src/scenarios/ScenarioController.js"></script>
+    <script src="./src/scenarios/ScenarioService.js"></script>   
+    <script src="./assets/materialtheme.js"></script>
+
+  </body>
+</html>
